@@ -1,0 +1,16 @@
+# Render Cron service: runs multica_watcher.py every 5 min.
+# Free tier compatible. Set RENDER_TOKEN on the service's env after creation.
+services:
+  - type: cron
+    name: multica-watcher
+    runtime: python
+    region: oregon
+    plan: starter
+    schedule: "*/5 * * * *"
+    buildCommand: pip install --upgrade pip
+    startCommand: python3 multica_watcher.py
+    envVars:
+      - key: RENDER_TOKEN
+        sync: false
+      - key: PYTHONUNBUFFERED
+        value: "1"
