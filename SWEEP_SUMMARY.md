@@ -1,61 +1,66 @@
-# Multica — Master Parameter Sweep Summary
+# Multica — Master Status Summary
 
-_Generated 2026-05-11, 60d walk-forward on HL 1h candles, full engine universe._
+_Updated: 2026-05-11 (post-v2 deployments)_
 
 ## Headline
 
-| engine | status | trades | WR | sumR | PF | best params |
+| engine | status | trades | WR | sumR | PF | notes |
 |---|---|--:|--:|--:|--:|---|
-| `tod-reversion-v1` | ✅ **promote** | 510 | 60.8% | +41.6 | 1.10 | `vwap_dev=0.005` |
-| `avwap-mesh-v1` | ✅ **promote** | 549 | 23.3% | +89.98 | 1.15 | defaults (asymmetric R) |
-| `liq-heatmap-v1` | ✅ **promote** | 80 | 33.8% | +26.96 | 1.42 | `vol_spike=1.4, min_pivots=2` |
-| `vpin-v1` | ⚠ marginal | 43 | 34.9% | -1.73 | 0.67 | `vpin=0.20, prox=0.03` |
-| `funding-div-v1` | ⏸ live-only | – | – | – | – | not backtestable (fetches live funding) |
-| `venue-lag-v1` | ⏸ live-only | – | – | – | – | not backtestable (fetches live Binance/Bybit) |
-| `wyckoff-v1` | 🛑 needs rewrite | 0 | – | – | – | 0 fires across 12 grid combos |
+| `tod-reversion-v1` | ✅ **promote-ready** | 510 | 60.8% | +41.6  | 1.10 | best WR; robust across grid |
+| `avwap-mesh-v1`    | ✅ **promote-ready** | 549 | 23.3% | +89.98 | 1.15 | asymmetric R distribution |
+| `liq-heatmap-v1`   | ✅ **promote-ready** |  80 | 33.8% | +26.96 | 1.42 | tuned `vol_spike=1.4, min_pivots=2` |
+| `wyckoff-v1`       | ✅ **promote-ready** v2 |  46 | 34.8% | +12.10 | 1.79 | rewritten: 4h, restricted universe |
+| `funding-div-v1`   | ✅ **promote-ready** v2 | 119 | 42.9% | +11.11 | 1.13 | historicised via HL fundingHistory |
+| `venue-lag-v1`     | ⏸ live-only | – | – | – | – | needs historical cross-venue archive |
+| `vpin-v1`          | 🛑 **deprecated** | – | – | – | – | suspended; needs websocket trade-tape |
 
-## Per-engine detail
+## What changed this pass
 
-Each engine has a `SWEEP_RESULTS.md` committed to its repo with the full grid.
+### Promoted (from "needs rewrite" / "not backtestable"):
 
-### Promotable (3)
+**`wyckoff-v1` v2** — Strategy rewrite. From **0 fires** (v1) to PF 1.79.
+- Timeframe 1h → 4h (cleaner range structure on crypto)
+- Percentile-based range detection with in-band tolerance
+- Dropped ATR-contraction filter (the silent killer)
+- Restricted universe: BTC/ETH/SOL/LINK/AVAX only
+- Defaults rebuilt: `range_lookback=18, spring_vol_mult=1.3, breach_max_pct=0.015`
+- 90d backtest: 46 trades, 34.8% WR, sumR +12.10, medPF 1.79
+  - ETH +5.02R / AVAX +5.68R / LINK +4.75R led; SOL -4.41R worst
 
-- **`tod-reversion-v1`** — Time-of-day MR around session VWAP. Most reliable engine: 60.8% WR, near-monotonic across grid (every dev threshold 0.002–0.006 produces 475–578 trades, 58–61% WR, +27 to +42 sumR). Robust strategy.
-- **`avwap-mesh-v1`** — AVWAP confluence fader. Big asymmetric R distribution: 23% WR but R-multiple wins large. Current defaults are optimal of the 6 combos tested. Already has live paper fills.
-- **`liq-heatmap-v1`** — Stop-hunt cluster fader. Sweep transformed it from PF 0.0 (default) to PF 1.42 by loosening `vol_spike` (1.8→1.4) and `min_pivots` (3→2). The tighter defaults were starving the signal of valid setups.
+**`funding-div-v1` v2** — Strategy now backtestable.
+- Added `_funding_for_bar()` — reads `df['funding']` in backtest mode,
+  falls back to live HL `metaAndAssetCtxs` in production
+- Built `backtester_with_funding.py` — paginates HL `fundingHistory`
+  (500-sample window) and asof-joins to candle bars
+- Fixed unit bug — funding is decimal, prior defaults were ~20x typical max
+- New default thresholds: `funding_threshold_hi=1.5e-5, lo=-1.5e-5`
+- 60d backtest: 119 trades, 42.9% WR, sumR +11.11, medPF 1.13
+  - DOGE +9.60R / BTC +3.89R / XRP +3.28R led; ETH -5.43R worst
 
-### Marginal (1)
+### Deprecated:
 
-- **`vpin-v1`** — Bar-aggregate VPIN proxy. Required vpin_threshold=0.20 (far below typical 0.55) and proximity=0.03 (instead of 0.005) to fire 43 trades, but result is PF 0.67. The aggressor-flow estimator from candle anatomy is too crude. Strategy needs either (a) real tick-level VPIN, or (b) different mechanic entirely.
+**`vpin-v1`** — Render service suspended.
+- Bar-aggregate VPIN proxy is fundamentally too crude
+- HL `recentTrades` only returns last 10 trades (not historicisable)
+- A real VPIN engine needs websocket trade-tape collector (~2-day build)
+- PM registry updated: `lifecycle_stage: demoted, capital_fraction: 0.0, deprecated: True`
+- Repo retained with `DEPRECATED.md` for future revisit
 
-### Live-only (2)
+### Remaining live-only:
 
-These strategies fetch live external data inside `evaluate_latest_bar()`. Backtest cannot historicise that data, so every historical bar sees today's funding / today's Binance price — useless.
+**`venue-lag-v1`** — same backtest limitation as funding-div had.
+- Reads live Binance + Bybit prices inside detector
+- Could be historicised via Binance's free historical price API
+- Lower priority than the 5 now-promotable engines — judge on paper for now
 
-- **`funding-div-v1`** — Pulls HL `metaAndAssetCtxs` for current funding rate.
-- **`venue-lag-v1`** — Pulls live Binance + Bybit prices.
+## Promotion path (next 14 days)
 
-To backtest properly, both need:
-1. A historical funding-rate / cross-venue archive (Binance API has historical funding; Bybit doesn't free)
-2. A backtest-mode flag on the strategy that reads from the archive instead of live
+For the 5 promote-ready engines:
 
-For now, these run live-only — paper performance will show whether the live signal works regardless.
+1. Today–Day 7: paper-mode forward walk. Compare per-day paper PF to backtest PF.
+2. Day 7: review paper performance. If paper PF within 20% of backtest, queue for canary.
+3. Day 14: promote to canary stage (`lifecycle_stage="canary"`, `PM_CHECK_ENABLED=1`).
+   PM will allocate 5% capital fraction to canary engines.
 
-### Strategy-rewrite (1)
-
-- **`wyckoff-v1`** — Range-detection requires range-width 1.5%–12%, ATR contraction 30% across 30 bars, volume spike, AND wick breach. Even at vol_mult=1.0 and breach=2%, every grid combo: **0 fires**. The trading-range filter is the killer — crypto rarely produces clean Wyckoff ranges on 1h frames. Options:
-  - Move to 4h or daily timeframe (more range-bound bars)
-  - Drop the ATR-contraction requirement entirely (let any sideways action count)
-  - Rewrite as "wide-channel breakout fade" instead
-
-## Applied to live services
-
-Winning params pushed to Render env vars on the 3 promote-candidates + vpin (for monitoring). All engines redeploying.
-
-## Next steps
-
-1. **Monitor 7d** — once redeploys complete, watch paper accumulation
-2. **Promote** the 3 winners to `canary` (5% capital) after 14d agreement between backtest PF and paper PF (±20%)
-3. **Rewrite** wyckoff's range detection (4h timeframe + drop ATR contraction)
-4. **Historical-data refactor** for funding-div + venue-lag, OR accept them as live-only and judge purely on paper performance
-5. **vpin** — strategy review: either ship tick-level VPIN or replace mechanic
+Engines to monitor first: `tod-reversion-v1` (highest WR), `avwap-mesh-v1`
+(already has 2 paper fills).
