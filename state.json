@@ -1,0 +1,128 @@
+{
+  "liq-heatmap-v1": {
+    "fork_done": true,
+    "repo_path": "/tmp/multica/repos/liq-heatmap-v1",
+    "push_done": true,
+    "repo_full": "Dapperscyphozoa/liq-heatmap-v1",
+    "deploy_done": true,
+    "service_id": "srv-d80ro1gg4nts738u4oqg",
+    "url": "https://liq-heatmap-v1.onrender.com",
+    "smoke": {
+      "ok": true,
+      "body": {
+        "status": "ok",
+        "ts": 1778498705502,
+        "halted": false,
+        "mode_effective": "paper"
+      }
+    }
+  },
+  "funding-div-v1": {
+    "fork_done": true,
+    "repo_path": "/tmp/multica/repos/funding-div-v1",
+    "push_done": true,
+    "repo_full": "Dapperscyphozoa/funding-div-v1",
+    "deploy_done": true,
+    "service_id": "srv-d80ro1jeo5us73fqu2r0",
+    "url": "https://funding-div-v1.onrender.com",
+    "smoke": {
+      "ok": true,
+      "body": {
+        "status": "ok",
+        "ts": 1778498706521,
+        "halted": false,
+        "mode_effective": "paper"
+      }
+    }
+  },
+  "vpin-v1": {
+    "fork_done": true,
+    "repo_path": "/tmp/multica/repos/vpin-v1",
+    "push_done": true,
+    "repo_full": "Dapperscyphozoa/vpin-v1",
+    "deploy_done": true,
+    "service_id": "srv-d80ro1jbc2fs738etkjg",
+    "url": "https://vpin-v1.onrender.com",
+    "smoke": {
+      "ok": true,
+      "body": {
+        "status": "ok",
+        "ts": 1778498707416,
+        "halted": false,
+        "mode_effective": "paper"
+      }
+    }
+  },
+  "venue-lag-v1": {
+    "fork_done": true,
+    "repo_path": "/tmp/multica/repos/venue-lag-v1",
+    "push_done": true,
+    "repo_full": "Dapperscyphozoa/venue-lag-v1",
+    "deploy_done": true,
+    "service_id": "srv-d80ro1nlk1mc739sfqj0",
+    "url": "https://venue-lag-v1.onrender.com",
+    "smoke": {
+      "ok": true,
+      "body": {
+        "status": "ok",
+        "ts": 1778498708419,
+        "halted": false,
+        "mode_effective": "paper"
+      }
+    }
+  },
+  "tod-reversion-v1": {
+    "fork_done": true,
+    "repo_path": "/tmp/multica/repos/tod-reversion-v1",
+    "push_done": true,
+    "repo_full": "Dapperscyphozoa/tod-reversion-v1",
+    "deploy_done": true,
+    "service_id": "srv-d80ro2vavr4c73aq4ubg",
+    "url": "https://tod-reversion-v1.onrender.com",
+    "smoke": {
+      "ok": true,
+      "body": {
+        "status": "ok",
+        "ts": 1778498709294,
+        "halted": false,
+        "mode_effective": "paper"
+      }
+    }
+  },
+  "wyckoff-v1": {
+    "fork_done": true,
+    "repo_path": "/tmp/multica/repos/wyckoff-v1",
+    "push_done": true,
+    "repo_full": "Dapperscyphozoa/wyckoff-v1",
+    "deploy_done": true,
+    "service_id": "srv-d80ro367r5hc73btg24g",
+    "url": "https://wyckoff-v1.onrender.com",
+    "smoke": {
+      "ok": true,
+      "body": {
+        "status": "ok",
+        "ts": 1778498710310,
+        "halted": false,
+        "mode_effective": "paper"
+      }
+    }
+  },
+  "avwap-mesh-v1": {
+    "fork_done": true,
+    "repo_path": "/tmp/multica/repos/avwap-mesh-v1",
+    "push_done": true,
+    "repo_full": "Dapperscyphozoa/avwap-mesh-v1",
+    "deploy_done": true,
+    "service_id": "srv-d80ro3dckfvc73ddj610",
+    "url": "https://avwap-mesh-v1.onrender.com",
+    "smoke": {
+      "ok": true,
+      "body": {
+        "status": "ok",
+        "ts": 1778498711123,
+        "halted": false,
+        "mode_effective": "paper"
+      }
+    }
+  }
+}
