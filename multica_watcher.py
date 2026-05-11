@@ -1,4 +1,3 @@
-import os
 """
 multica_watcher.py — autonomous health + self-heal loop for the multica engines.
 
@@ -16,6 +15,7 @@ Run with:
 Designed for Render's free tier — keeps engines warm too.
 """
 from __future__ import annotations
+import os
 import sys
 import time
 import json
