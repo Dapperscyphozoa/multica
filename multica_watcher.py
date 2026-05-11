@@ -33,7 +33,7 @@ SERVICES = {
     # Multica engines (we own these)
     "liq-heatmap-v1":   {"id": "srv-d80ro1gg4nts738u4oqg", "url": "https://liq-heatmap-v1.onrender.com",   "owned": True},
     "funding-div-v1":   {"id": "srv-d80ro1jeo5us73fqu2r0", "url": "https://funding-div-v1.onrender.com",   "owned": True},
-    "vpin-v1":          {"id": "srv-d80ro1jbc2fs738etkjg", "url": "https://vpin-v1.onrender.com",          "owned": True},
+    "vpin-v1":          {"id": "srv-d80ro1jbc2fs738etkjg", "url": "https://vpin-v1.onrender.com",          "owned": True, "suspended": True},
     "venue-lag-v1":     {"id": "srv-d80ro1nlk1mc739sfqj0", "url": "https://venue-lag-v1.onrender.com",     "owned": True},
     "tod-reversion-v1": {"id": "srv-d80ro2vavr4c73aq4ubg", "url": "https://tod-reversion-v1.onrender.com", "owned": True},
     "wyckoff-v1":       {"id": "srv-d80ro367r5hc73btg24g", "url": "https://wyckoff-v1.onrender.com",       "owned": True},
@@ -141,6 +141,9 @@ def fix_attempt(name: str, svc_id: str, tag: str) -> dict:
 
 # ─── Main loop ────────────────────────────────────────────────────────
 def check_one(name: str, info: dict) -> dict:
+    if info.get("suspended"):
+        return {"name": name, "ok": True, "suspended": True,
+                "mode": "suspended"}
     url = info["url"]
     h = http_get(f"{url}/health")
     if h.get("ok") and h.get("body", {}).get("status") == "ok":
@@ -180,7 +183,10 @@ def one_pass(verbose: bool = True):
         results.append(r)
         if verbose:
             if r["ok"]:
-                print(f"  ✓ {name}: ok ({r.get('mode','?')})")
+                if r.get("suspended"):
+                    print(f"  — {name}: suspended (deprecated)")
+                else:
+                    print(f"  ✓ {name}: ok ({r.get('mode','?')})")
             else:
                 fix = r.get("fix", {})
                 print(f"  ✗ {name}: status={r.get('status')} tag={r.get('tag')} "
