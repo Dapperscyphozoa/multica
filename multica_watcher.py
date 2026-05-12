@@ -140,6 +140,81 @@ def fix_attempt(name: str, svc_id: str, tag: str) -> dict:
 
 
 # ─── Main loop ────────────────────────────────────────────────────────
+def get_engine_trade_activity(url: str) -> dict:
+    """Fetch last-trade timestamp + 24h/72h/168h trade counts from an engine."""
+    closures = http_get(f"{url}/closures?limit=200")
+    if not closures.get("ok"):
+        return {"ok": False, "reason": "closures_unreachable"}
+    rows = closures["body"].get("closures", [])
+    now_ms = int(time.time() * 1000)
+    last_ts = None
+    n_24h = n_72h = n_168h = 0
+    for r in rows:
+        ts = r.get("ts_close") or r.get("ts_open") or 0
+        if not ts: continue
+        if last_ts is None or ts > last_ts:
+            last_ts = ts
+        age_ms = now_ms - ts
+        if age_ms < 86400_000: n_24h += 1
+        if age_ms < 3*86400_000: n_72h += 1
+        if age_ms < 7*86400_000: n_168h += 1
+    return {
+        "ok": True,
+        "last_trade_ts": last_ts,
+        "hours_since_last": (now_ms - last_ts) / 3600_000 if last_ts else None,
+        "n_trades_24h": n_24h,
+        "n_trades_72h": n_72h,
+        "n_trades_168h": n_168h,
+    }
+
+
+def get_cell_state(url: str) -> dict:
+    """Fetch cell breakdown from engine's /cells endpoint."""
+    r = http_get(f"{url}/cells")
+    if not r.get("ok"):
+        return {"ok": False}
+    cells = r["body"].get("cells", [])
+    active = [c for c in cells if c.get("stage") == "active"]
+    bootstrap = [c for c in cells if c.get("stage") == "bootstrap"]
+    demoted = [c for c in cells if c.get("stage") == "demoted"]
+
+    # Drift detection: active cells with PF < 1.3 (close to demotion threshold)
+    drift_warning = [c["cell_key"] for c in active
+                      if c.get("pf") is not None and c["pf"] < 1.30]
+    # Rehab candidates: demoted cells with recent good PF
+    rehab = [c["cell_key"] for c in demoted
+              if c.get("pf") is not None and c["pf"] > 1.40
+              and c.get("n_trades", 0) >= 5]
+
+    return {
+        "ok": True,
+        "total": len(cells),
+        "active_n": len(active),
+        "bootstrap_n": len(bootstrap),
+        "demoted_n": len(demoted),
+        "drift_warning": drift_warning,
+        "rehab_candidates": rehab,
+    }
+
+
+def classify_activity_alert(activity: dict, has_active_cells: bool) -> str | None:
+    """Determine if an engine should be flagged for stale trading.
+
+    Returns: None | 'COLD_24H' | 'STALE_72H' | 'DEAD_168H'
+    """
+    if not activity.get("ok"):
+        return None
+    hrs = activity.get("hours_since_last")
+    if hrs is None:
+        # No trades ever — only alert if engine claims active cells
+        return "NO_TRADES_EVER" if has_active_cells else None
+    if hrs >= 168: return "DEAD_168H"
+    if hrs >= 72:  return "STALE_72H"
+    if hrs >= 24 and activity.get("n_trades_24h", 0) == 0:
+        return "COLD_24H"
+    return None
+
+
 def check_one(name: str, info: dict) -> dict:
     if info.get("suspended"):
         return {"name": name, "ok": True, "suspended": True,
@@ -147,8 +222,17 @@ def check_one(name: str, info: dict) -> dict:
     url = info["url"]
     h = http_get(f"{url}/health")
     if h.get("ok") and h.get("body", {}).get("status") == "ok":
-        return {"name": name, "ok": True, "mode": h["body"].get("mode_effective"),
-                "halted": h["body"].get("halted")}
+        # Healthy. Now check activity + cell state.
+        activity = get_engine_trade_activity(url) if info.get("owned") else {"ok": False}
+        cells = get_cell_state(url) if info.get("owned") else {"ok": False}
+        alert = None
+        if info.get("owned"):
+            has_active = cells.get("active_n", 0) > 0
+            alert = classify_activity_alert(activity, has_active)
+        return {"name": name, "ok": True,
+                "mode": h["body"].get("mode_effective"),
+                "halted": h["body"].get("halted"),
+                "activity": activity, "cells": cells, "alert": alert}
     # Unhealthy
     logs = get_logs(info["id"], 80)
     msgs = [l.get("message", "") for l in logs]
@@ -186,7 +270,20 @@ def one_pass(verbose: bool = True):
                 if r.get("suspended"):
                     print(f"  — {name}: suspended (deprecated)")
                 else:
-                    print(f"  ✓ {name}: ok ({r.get('mode','?')})")
+                    a = r.get("activity") or {}
+                    c = r.get("cells") or {}
+                    hrs = a.get("hours_since_last")
+                    hrs_str = f"{hrs:.0f}h" if hrs is not None else "never"
+                    cell_str = (f"cells:{c.get('active_n',0)}A/{c.get('bootstrap_n',0)}B/"
+                                f"{c.get('demoted_n',0)}D" if c.get("ok") else "")
+                    alert = r.get("alert")
+                    alert_str = f" [{alert}]" if alert else ""
+                    print(f"  ✓ {name}: ok ({r.get('mode','?')}) "
+                          f"last_trade={hrs_str} t24h={a.get('n_trades_24h',0)} {cell_str}{alert_str}")
+                    if c.get("drift_warning"):
+                        print(f"      ⚠ drift: {','.join(c['drift_warning'][:5])}")
+                    if c.get("rehab_candidates"):
+                        print(f"      ↺ rehab: {','.join(c['rehab_candidates'][:5])}")
             else:
                 fix = r.get("fix", {})
                 print(f"  ✗ {name}: status={r.get('status')} tag={r.get('tag')} "
