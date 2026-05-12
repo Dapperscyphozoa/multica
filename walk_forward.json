@@ -1,0 +1,72 @@
+{
+  "windows": [
+    "early(180-120d)",
+    "middle(120-60d)",
+    "recent(60-0d)"
+  ],
+  "results": {
+    "wyckoff-v1::early": {
+      "n": 11,
+      "pf": 2.6,
+      "sumR": 8.24,
+      "sharpe": 0.3533,
+      "wr": 54.5
+    },
+    "liq-heatmap-v1::early": {
+      "n": 11,
+      "pf": 1.03,
+      "sumR": 0.21,
+      "sharpe": 0.0116,
+      "wr": 36.4
+    },
+    "avwap-mesh-v1::early": {
+      "n": 537,
+      "pf": 0.818,
+      "sumR": -80.03,
+      "sharpe": -0.0717,
+      "wr": 19.6
+    },
+    "wyckoff-v1::middle": {
+      "n": 19,
+      "pf": 0.853,
+      "sumR": -2.28,
+      "sharpe": -0.0648,
+      "wr": 21.1
+    },
+    "liq-heatmap-v1::middle": {
+      "n": 3,
+      "pf": 0.971,
+      "sumR": -0.06,
+      "sharpe": -0.0112,
+      "wr": 33.3
+    },
+    "avwap-mesh-v1::middle": {
+      "n": 533,
+      "pf": 1.087,
+      "sumR": 37.96,
+      "sharpe": 0.0279,
+      "wr": 20.3
+    },
+    "wyckoff-v1::recent": {
+      "n": 15,
+      "pf": 2.093,
+      "sumR": 9.32,
+      "sharpe": 0.3037,
+      "wr": 40.0
+    },
+    "liq-heatmap-v1::recent": {
+      "n": 14,
+      "pf": 1.399,
+      "sumR": 3.28,
+      "sharpe": 0.1454,
+      "wr": 42.9
+    },
+    "avwap-mesh-v1::recent": {
+      "n": 497,
+      "pf": 1.098,
+      "sumR": 36.6,
+      "sharpe": 0.0333,
+      "wr": 25.6
+    }
+  }
+}
