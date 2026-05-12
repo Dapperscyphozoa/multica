@@ -38,6 +38,10 @@ SERVICES = {
     "tod-reversion-v1": {"id": "srv-d80ro2vavr4c73aq4ubg", "url": "https://tod-reversion-v1.onrender.com", "owned": True, "suspended": True},
     "wyckoff-v1":       {"id": "srv-d80ro367r5hc73btg24g", "url": "https://wyckoff-v1.onrender.com",       "owned": True},
     "avwap-mesh-v1":    {"id": "srv-d80ro3dckfvc73ddj610", "url": "https://avwap-mesh-v1.onrender.com",    "owned": True},
+    "alt-rotation-v1":  {"id": "srv-d816te8g4nts7398ffmg", "url": "https://alt-rotation-v1.onrender.com", "owned": True},
+    "tod-momentum-v1":  {"id": "srv-d819tve7r5hc73cafabg", "url": "https://tod-momentum-v1.onrender.com", "owned": True},
+    "cross-venue-funding-v1": {"id": "srv-d819hqugvqtc73e6tei0", "url": "https://cross-venue-funding-v1.onrender.com", "owned": True},
+    "funding-harvester-v1": {"id": "srv-d81abs7lk1mc73a8i9d0", "url": "https://funding-harvester-v1.onrender.com", "owned": True},
     # Supporting (read-only)
     "portfolio-manager": {"id": "srv-d7vjeb6gvqtc73coi4m0", "url": PM_URL,                          "owned": False},
 }
