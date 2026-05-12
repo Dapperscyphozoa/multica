@@ -35,7 +35,7 @@ SERVICES = {
     "funding-div-v1":   {"id": "srv-d80ro1jeo5us73fqu2r0", "url": "https://funding-div-v1.onrender.com",   "owned": True},
     "vpin-v1":          {"id": "srv-d80ro1jbc2fs738etkjg", "url": "https://vpin-v1.onrender.com",          "owned": True, "suspended": True},
     "venue-lag-v1":     {"id": "srv-d80ro1nlk1mc739sfqj0", "url": "https://venue-lag-v1.onrender.com",     "owned": True},
-    "tod-reversion-v1": {"id": "srv-d80ro2vavr4c73aq4ubg", "url": "https://tod-reversion-v1.onrender.com", "owned": True},
+    "tod-reversion-v1": {"id": "srv-d80ro2vavr4c73aq4ubg", "url": "https://tod-reversion-v1.onrender.com", "owned": True, "suspended": True},
     "wyckoff-v1":       {"id": "srv-d80ro367r5hc73btg24g", "url": "https://wyckoff-v1.onrender.com",       "owned": True},
     "avwap-mesh-v1":    {"id": "srv-d80ro3dckfvc73ddj610", "url": "https://avwap-mesh-v1.onrender.com",    "owned": True},
     # Supporting (read-only)
