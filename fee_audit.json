@@ -1,0 +1,481 @@
+[
+  {
+    "engine": "wyckoff-v1",
+    "fee_blind": {
+      "n": 23,
+      "wr_pct": 47.8,
+      "pf": 2.38,
+      "sum_r": 16.53,
+      "avg_r": 0.7188,
+      "sharpe_per_trade": 0.3718,
+      "max_dd_r": 6.0,
+      "recovery_ratio": 2.76,
+      "days_active": 78,
+      "max_trades_per_day": 6,
+      "mean_trades_per_day": 1.77,
+      "top5_concentration": 13.9,
+      "close_reasons": {
+        "SL": 12,
+        "TP": 10,
+        "TIME": 0,
+        "EOD": 1
+      },
+      "by_coin": {
+        "DOGE": {
+          "n": 3,
+          "wr": 33.3,
+          "sum_r": 0.5,
+          "pf": 1.25
+        },
+        "BTC": {
+          "n": 5,
+          "wr": 40.0,
+          "sum_r": 2.06,
+          "pf": 1.69
+        },
+        "LINK": {
+          "n": 5,
+          "wr": 60.0,
+          "sum_r": 6.25,
+          "pf": 4.12
+        },
+        "AVAX": {
+          "n": 4,
+          "wr": 75.0,
+          "sum_r": 8.68,
+          "pf": 9.68
+        },
+        "HYPE": {
+          "n": 4,
+          "wr": 50.0,
+          "sum_r": 1.04,
+          "pf": 1.52
+        },
+        "XRP": {
+          "n": 2,
+          "wr": 0.0,
+          "sum_r": -2.0,
+          "pf": 0.0
+        }
+      },
+      "longs": {
+        "n": 23,
+        "wr": 47.8,
+        "sum_r": 16.53,
+        "pf": 2.38
+      },
+      "shorts": {
+        "n": 0
+      }
+    },
+    "taker": {
+      "n": 23,
+      "wr": 47.8,
+      "pf": 2.19,
+      "sumR": 15.15
+    },
+    "maker": {
+      "n": 23,
+      "wr": 47.8,
+      "pf": 2.307,
+      "sumR": 16.15
+    },
+    "builder": {
+      "n": 23,
+      "wr": 47.8,
+      "pf": 2.324,
+      "sumR": 16.25
+    }
+  },
+  {
+    "engine": "funding-div-v1",
+    "fee_blind": {
+      "n": 116,
+      "wr_pct": 55.2,
+      "pf": 2.06,
+      "sum_r": 50.25,
+      "avg_r": 0.4332,
+      "sharpe_per_trade": 0.326,
+      "max_dd_r": 8.35,
+      "recovery_ratio": 6.02,
+      "days_active": 75,
+      "max_trades_per_day": 8,
+      "mean_trades_per_day": 2.07,
+      "top5_concentration": 10.2,
+      "close_reasons": {
+        "SL": 46,
+        "TP": 41,
+        "TIME": 29,
+        "EOD": 0
+      },
+      "by_coin": {
+        "XRP": {
+          "n": 30,
+          "wr": 46.7,
+          "sum_r": 8.15,
+          "pf": 1.6
+        },
+        "BNB": {
+          "n": 17,
+          "wr": 58.8,
+          "sum_r": 11.2,
+          "pf": 2.6
+        },
+        "HYPE": {
+          "n": 17,
+          "wr": 58.8,
+          "sum_r": 5.84,
+          "pf": 1.96
+        },
+        "AVAX": {
+          "n": 13,
+          "wr": 46.2,
+          "sum_r": 4.21,
+          "pf": 1.66
+        },
+        "DOGE": {
+          "n": 15,
+          "wr": 60.0,
+          "sum_r": 10.27,
+          "pf": 2.93
+        },
+        "BTC": {
+          "n": 22,
+          "wr": 59.1,
+          "sum_r": 7.78,
+          "pf": 1.86
+        },
+        "LINK": {
+          "n": 2,
+          "wr": 100.0,
+          "sum_r": 2.8,
+          "pf": Infinity
+        }
+      },
+      "longs": {
+        "n": 116,
+        "wr": 55.2,
+        "sum_r": 50.25,
+        "pf": 2.06
+      },
+      "shorts": {
+        "n": 0
+      }
+    },
+    "taker": {
+      "n": 116,
+      "wr": 55.2,
+      "pf": 1.855,
+      "sumR": 43.25
+    },
+    "maker": {
+      "n": 116,
+      "wr": 55.2,
+      "pf": 1.98,
+      "sumR": 48.04
+    },
+    "builder": {
+      "n": 116,
+      "wr": 55.2,
+      "pf": 1.999,
+      "sumR": 48.59
+    }
+  },
+  {
+    "engine": "liq-heatmap-v1",
+    "fee_blind": {
+      "n": 80,
+      "wr_pct": 40.0,
+      "pf": 1.68,
+      "sum_r": 32.2,
+      "avg_r": 0.4025,
+      "sharpe_per_trade": 0.2229,
+      "max_dd_r": 10.83,
+      "recovery_ratio": 2.97,
+      "days_active": 80,
+      "max_trades_per_day": 5,
+      "mean_trades_per_day": 1.86,
+      "top5_concentration": 21.5,
+      "close_reasons": {
+        "SL": 47,
+        "TP": 24,
+        "TIME": 9,
+        "EOD": 0
+      },
+      "by_coin": {
+        "XRP": {
+          "n": 14,
+          "wr": 42.9,
+          "sum_r": 6.92,
+          "pf": 1.86
+        },
+        "LINK": {
+          "n": 14,
+          "wr": 50.0,
+          "sum_r": 12.78,
+          "pf": 2.83
+        },
+        "SOL": {
+          "n": 19,
+          "wr": 36.8,
+          "sum_r": 3.95,
+          "pf": 1.33
+        },
+        "HYPE": {
+          "n": 14,
+          "wr": 14.3,
+          "sum_r": -8.85,
+          "pf": 0.26
+        },
+        "BNB": {
+          "n": 8,
+          "wr": 37.5,
+          "sum_r": 2.3,
+          "pf": 1.55
+        },
+        "AVAX": {
+          "n": 11,
+          "wr": 63.6,
+          "sum_r": 15.11,
+          "pf": 4.78
+        }
+      },
+      "longs": {
+        "n": 39,
+        "wr": 43.6,
+        "sum_r": 19.3,
+        "pf": 1.88
+      },
+      "shorts": {
+        "n": 41,
+        "wr": 36.6,
+        "sum_r": 12.9,
+        "pf": 1.51
+      }
+    },
+    "taker": {
+      "n": 80,
+      "wr": 40.0,
+      "pf": 1.547,
+      "sumR": 27.38
+    },
+    "maker": {
+      "n": 80,
+      "wr": 40.0,
+      "pf": 1.629,
+      "sumR": 30.55
+    },
+    "builder": {
+      "n": 80,
+      "wr": 40.0,
+      "pf": 1.642,
+      "sumR": 30.96
+    }
+  },
+  {
+    "engine": "tod-reversion-v1",
+    "fee_blind": {
+      "n": 531,
+      "wr_pct": 61.2,
+      "pf": 1.01,
+      "sum_r": 1.25,
+      "avg_r": 0.0024,
+      "sharpe_per_trade": 0.0031,
+      "max_dd_r": 25.22,
+      "recovery_ratio": 0.05,
+      "days_active": 81,
+      "max_trades_per_day": 11,
+      "mean_trades_per_day": 6.48,
+      "top5_concentration": 19.6,
+      "close_reasons": {
+        "SL": 163,
+        "TP": 276,
+        "TIME": 89,
+        "EOD": 3
+      },
+      "by_coin": {
+        "HYPE": {
+          "n": 59,
+          "wr": 61.0,
+          "sum_r": -1.56,
+          "pf": 0.92
+        },
+        "BNB": {
+          "n": 93,
+          "wr": 55.9,
+          "sum_r": -2.65,
+          "pf": 0.92
+        },
+        "DOGE": {
+          "n": 119,
+          "wr": 60.5,
+          "sum_r": -1.19,
+          "pf": 0.97
+        },
+        "LINK": {
+          "n": 31,
+          "wr": 71.0,
+          "sum_r": 2.47,
+          "pf": 1.29
+        },
+        "SOL": {
+          "n": 18,
+          "wr": 66.7,
+          "sum_r": 0.3,
+          "pf": 1.06
+        },
+        "AVAX": {
+          "n": 112,
+          "wr": 61.6,
+          "sum_r": 3.32,
+          "pf": 1.09
+        },
+        "BTC": {
+          "n": 87,
+          "wr": 58.6,
+          "sum_r": -2.92,
+          "pf": 0.9
+        },
+        "XRP": {
+          "n": 12,
+          "wr": 91.7,
+          "sum_r": 3.47,
+          "pf": 4.47
+        }
+      },
+      "longs": {
+        "n": 249,
+        "wr": 64.7,
+        "sum_r": 11.66,
+        "pf": 1.16
+      },
+      "shorts": {
+        "n": 282,
+        "wr": 58.2,
+        "sum_r": -10.41,
+        "pf": 0.9
+      }
+    },
+    "taker": {
+      "n": 531,
+      "wr": 60.6,
+      "pf": 0.836,
+      "sumR": -30.77
+    },
+    "maker": {
+      "n": 531,
+      "wr": 60.8,
+      "pf": 0.966,
+      "sumR": -6.17
+    },
+    "builder": {
+      "n": 531,
+      "wr": 61.0,
+      "pf": 0.976,
+      "sumR": -4.29
+    }
+  },
+  {
+    "engine": "avwap-mesh-v1",
+    "fee_blind": {
+      "n": 767,
+      "wr_pct": 23.6,
+      "pf": 1.18,
+      "sum_r": 105.46,
+      "avg_r": 0.1375,
+      "sharpe_per_trade": 0.0555,
+      "max_dd_r": 39.72,
+      "recovery_ratio": 2.66,
+      "days_active": 81,
+      "max_trades_per_day": 19,
+      "mean_trades_per_day": 9.35,
+      "top5_concentration": 44.8,
+      "close_reasons": {
+        "SL": 574,
+        "TP": 82,
+        "TIME": 107,
+        "EOD": 4
+      },
+      "by_coin": {
+        "SOL": {
+          "n": 75,
+          "wr": 21.3,
+          "sum_r": 9.22,
+          "pf": 1.16
+        },
+        "BNB": {
+          "n": 104,
+          "wr": 29.8,
+          "sum_r": 21.68,
+          "pf": 1.3
+        },
+        "HYPE": {
+          "n": 90,
+          "wr": 22.2,
+          "sum_r": 8.73,
+          "pf": 1.12
+        },
+        "AVAX": {
+          "n": 137,
+          "wr": 22.6,
+          "sum_r": 8.59,
+          "pf": 1.08
+        },
+        "LINK": {
+          "n": 72,
+          "wr": 23.6,
+          "sum_r": 27.35,
+          "pf": 1.5
+        },
+        "XRP": {
+          "n": 78,
+          "wr": 15.4,
+          "sum_r": -18.54,
+          "pf": 0.71
+        },
+        "BTC": {
+          "n": 104,
+          "wr": 24.0,
+          "sum_r": 12.7,
+          "pf": 1.16
+        },
+        "DOGE": {
+          "n": 107,
+          "wr": 27.1,
+          "sum_r": 35.73,
+          "pf": 1.47
+        }
+      },
+      "longs": {
+        "n": 378,
+        "wr": 25.9,
+        "sum_r": 129.07,
+        "pf": 1.47
+      },
+      "shorts": {
+        "n": 389,
+        "wr": 21.3,
+        "sum_r": -23.61,
+        "pf": 0.92
+      }
+    },
+    "taker": {
+      "n": 767,
+      "wr": 23.5,
+      "pf": 1.096,
+      "sumR": 59.21
+    },
+    "maker": {
+      "n": 767,
+      "wr": 23.5,
+      "pf": 1.143,
+      "sumR": 85.09
+    },
+    "builder": {
+      "n": 767,
+      "wr": 23.5,
+      "pf": 1.152,
+      "sumR": 90.14
+    }
+  }
+]
